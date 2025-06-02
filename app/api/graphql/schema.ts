@@ -1,64 +1,30 @@
 const schema = `#graphql
 
-type User {
-  id: ID!
-  email: String!
-  createdAt: String!
-  token: String
-  issues: [Issue]!
-}
-
-enum IssueStatus {
-  BACKLOG
-  TODO
-  INPROGRESS
-  DONE
-}
-
-type Issue {
-  id: ID!
-  createdAt: String!
-  userId: String!
-  user: User!
-  status: IssueStatus
-  content: String!
+interface Character {
   name: String!
-}
+  outfit: String!
+  strengthStat: Int!
+  }
 
-input AuthInput {
-  email: String!
-  password: String!
-}
-
-
-input CreateIssueInput {
+type Person implements Character {
   name: String!
-  content: String!
-  status: IssueStatus
+  outfit: String!
+  strengthStat: Int!
+
+  backgroundStory: String!
 }
 
-input EditIssueInput {
-  name: String
-  content: String
-  status: IssueStatus
-  id: ID!
-}
+type Alien implements Character {
+  name: String!
+  outfit: String!
+  strengthStat: Int!
 
-input IssuesFilterInput {
-  statuses: [IssueStatus]
+  homePlanet: String!
 }
 
 type Query {
-  me: User
-  issues(input: IssuesFilterInput): [Issue]!
-}
-
-type Mutation {
-  deleteIssue(id: ID!): ID!
-  createIssue(input: CreateIssueInput!): Issue!
-  editIssue(input: EditIssueInput!): Issue!
-  createUser(input: AuthInput!): User
-  signin(input: AuthInput!): User
+  me: Person
+  characters: [Character!]! #has to return an array and it cannot be empty
 }
 `
 
